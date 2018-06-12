@@ -33,7 +33,7 @@ public class CatalogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
 
-        // Setup FAB to open EditorActivity
+        // Setup FAB (floating action button) to open EditorActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +43,9 @@ public class CatalogActivity extends AppCompatActivity {
             }
         });
     }
+
+    
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
