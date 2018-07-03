@@ -95,6 +95,9 @@
     <!-- Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
     <string name="editor_delete_pet_failed">Error with deleting pet</string>
 
+    <!-- Toast message in editor when current pet doesn't have a name [CHAR LIMIT=NONE] -->
+    <string name="editor_pet_no_name">"A pet without a name cannot be saved. Please add a name"</string>
+
     <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
     <string name="delete_dialog_msg">Delete this pet?</string>
 

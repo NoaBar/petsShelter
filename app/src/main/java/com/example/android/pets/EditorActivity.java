@@ -25,6 +25,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -73,6 +74,7 @@ public class EditorActivity extends AppCompatActivity implements
 
     /** Boolean flag that keeps track of whether the pet has been edited (true) or not (false) */
     private boolean mPetHasChanged = false;
+
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
@@ -170,6 +172,21 @@ public class EditorActivity extends AppCompatActivity implements
         });
     }
 
+    public void showNoNameAlert(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditorActivity.this);
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Please enter pet's name");
+        alertDialog.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss(); // dismiss AlertDialog
+                    }
+                });
+        alertDialog.show();
+    }
+
+
     /**
      * Get user input from editor and save pet into database.
      */
@@ -185,8 +202,17 @@ public class EditorActivity extends AppCompatActivity implements
         if (mCurrentPetUri == null &&
                 TextUtils.isEmpty(nameString) && TextUtils.isEmpty(breedString) &&
                 TextUtils.isEmpty(weightString) && mGender == PetEntry.GENDER_UNKNOWN) {
+
+            // Exit activity
+            finish();
+
             // Since no fields were modified, we can return early without creating a new pet.
             // No need to create ContentValues and no need to do any ContentProvider operations.
+            return;
+        }
+
+        if (TextUtils.isEmpty(nameString)){
+            showNoNameAlert();
             return;
         }
 
@@ -238,6 +264,8 @@ public class EditorActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
             }
         }
+        // Exit activity
+        finish();
     }
 
     @Override
@@ -271,8 +299,6 @@ public class EditorActivity extends AppCompatActivity implements
             case R.id.action_save:
                 // Save pet to database
                 savePet();
-                // Exit activity
-                finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
@@ -434,6 +460,8 @@ public class EditorActivity extends AppCompatActivity implements
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+
 
     /**
      * Prompt the user to confirm that they want to delete this pet.
